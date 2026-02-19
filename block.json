@@ -1,0 +1,12 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "create-block/saipan-location-checkout",
+	"version": "0.1.0",
+	"title": "Saipan Location Checkout",
+	"category": "widgets",
+	"textdomain": "saipan-location-checkout",
+	"editorScript": "file:./build/index.js",
+	"editorStyle": "file:./build/index.css",
+	"style": "file:./build/style-index.css"
+}
