@@ -2,7 +2,7 @@
 /**
  * Plugin Name:     Saipan Location Checkout
  * Plugin URI:		https://github.com/ryansallen98/saipan-location-checkout
- * Version:         0.1.0
+ * Version:         1.0.0
  * Author:          Ryan Allen
  * Author URI:	 	https://github.com/ryansallen98
  * License:         MIT

@@ -16,13 +16,9 @@
 	"devDependencies": {
 		"@woocommerce/dependency-extraction-webpack-plugin": "latest",
 		"@woocommerce/eslint-plugin": "latest",
-		"@wordpress/scripts": "^31.4.0"
-	},
-	"dependencies": {
+		"@wordpress/scripts": "^31.4.0",
 		"leaflet": "^1.9.4",
-		"maplibre-gl": "^5.18.0",
-		"pmtiles": "^4.4.0",
-		"react-leaflet": "^4.2.1",
-		"react-map-gl": "^8.1.0"
+		"prettier": "npm:wp-prettier@^2.6.2",
+		"react-leaflet": "^4.2.1"
 	}
 }
