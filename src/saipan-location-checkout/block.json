@@ -1,12 +1,12 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "create-block/saipan-location-checkout",
+  "name": "saipan-location-checkout/saipan-location-checkout-block",
   "version": "1.0.0",
   "title": "Saipan Location Checkout",
   "category": "woocommerce",
   "textdomain": "saipan-location-checkout",
-  "editorScript": "file:./build/index.js",
+  "editorScript": "file:./index.js",
   "supports": {
     "html": false,
     "align": false,

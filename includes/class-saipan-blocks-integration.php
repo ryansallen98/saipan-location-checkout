@@ -28,8 +28,8 @@ class SaipanLocationCheckout_Blocks_Integration implements IntegrationInterface
 	 */
 	public function initialize()
 	{
-		$script_path = 'build/index.js';
-		$style_path = 'build/index.css';
+		$script_path = 'build/saipan-location-checkout/index.js';
+		$style_path = 'build/saipan-location-checkout/index.css';
 
 		$plugin_url = plugin_dir_url(dirname(__FILE__));
 		$plugin_path = plugin_dir_path(dirname(__FILE__));
@@ -37,7 +37,7 @@ class SaipanLocationCheckout_Blocks_Integration implements IntegrationInterface
 		$script_url = $plugin_url . $script_path;
 		$style_url = $plugin_url . $style_path;
 
-		$script_asset_path = $plugin_path . 'build/index.asset.php';
+		$script_asset_path = $plugin_path . 'build/saipan-location-checkout/index.asset.php';
 
 		$script_asset = file_exists($script_asset_path)
 			? require $script_asset_path
