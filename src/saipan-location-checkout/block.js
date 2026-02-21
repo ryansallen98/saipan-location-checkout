@@ -23,6 +23,8 @@ import "leaflet/dist/leaflet.css";
 import WooCordInput from "./components/WooCordInput";
 import { useIsCollectionSelected } from "./hooks/useIsCollectionSelected";
 
+const NAMESPACE = "saipan-location-checkout";
+
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
@@ -52,6 +54,22 @@ function LocationPicker({ onPick }) {
       onPick(e.latlng);
     },
   });
+  return null;
+}
+
+function RecenterMap({ coords }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!coords) return;
+
+    // Smooth animation to the new location
+    map.flyTo([coords.lat, coords.lng], Math.max(map.getZoom(), 15), {
+      animate: true,
+      duration: 0.75,
+    });
+  }, [coords, map]);
+
   return null;
 }
 
@@ -110,8 +128,9 @@ export const Block = ({ cart, checkoutExtensionData, ...props }) => {
   }
 
   const debouncedSetExtensionData = useCallback(
-    debounce((namespace, key, value) => {
-      setExtensionData(namespace, key, value);
+    debounce((coords) => {
+      setExtensionData(NAMESPACE, "latitude", String(coords?.lat));
+      setExtensionData(NAMESPACE, "longitude", String(coords?.lng));
     }, 1000),
     [setExtensionData],
   );
@@ -120,7 +139,7 @@ export const Block = ({ cart, checkoutExtensionData, ...props }) => {
     "wc/store/validation",
   );
 
-  const validationErrorId = "saipan-delivery-location-latitude";
+  const validationErrorId = "saipan-location-checkout";
 
   const validationError = useSelect((select) => {
     const store = select("wc/store/validation");
@@ -134,18 +153,9 @@ export const Block = ({ cart, checkoutExtensionData, ...props }) => {
       return;
     }
 
-    debouncedSetExtensionData(
-      "saipan-delivery-location",
-      "latitude",
-      coords?.lat,
-    );
-    debouncedSetExtensionData(
-      "saipan-delivery-location",
-      "longitude",
-      coords?.lng,
-    );
+    debouncedSetExtensionData(coords);
 
-    if (!coords || !coords.lat || !coords.lng) {
+    if (!coords?.lat || !coords?.lng) {
       setValidationErrors({
         [validationErrorId]: {
           message: __(
@@ -155,21 +165,10 @@ export const Block = ({ cart, checkoutExtensionData, ...props }) => {
           hidden: true,
         },
       });
-    }
-
-    if (coords?.lat && coords?.lng) {
+    } else {
       clearValidationError(validationErrorId);
     }
-  }, [
-    coords,
-    setExtensionData,
-    setValidationErrors,
-    clearValidationError,
-    debouncedSetExtensionData,
-    hasSaipanDeliverySelected,
-    isCollectionActive,
-    validationErrorId,
-  ]);
+  }, [coords, hasSaipanDeliverySelected, isCollectionActive]);
 
   if (!hasSaipanDeliverySelected || isCollectionActive) {
     return null;
@@ -209,6 +208,7 @@ export const Block = ({ cart, checkoutExtensionData, ...props }) => {
         style={{ height: 300, width: "100%" }}
       >
         <FixLeafletResize />
+        <RecenterMap coords={coords} />
 
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
